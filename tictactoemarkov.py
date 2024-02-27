@@ -7,8 +7,9 @@ class TicTacToeMarkovChain:
     # Initializes a new instance of the Markov Chain with an empty transition table.
     # Parameters: size (int) - Size of the Tic Tac Toe board.
     # Returns: None.
-    def __init__(self, size=3):
+    def __init__(self, size=3, randomness=1):
         self.size = size
+        self.random_percent = randomness 
         self.transitions = {
             "x--------":{"x--o-----":1},
             "xx-o-----":{"xx-oo----":1},
@@ -42,7 +43,7 @@ class TicTacToeMarkovChain:
     def get_next_move(self, twoDArray):
         key = self._gamestate_to_key(twoDArray)
         self.history.append(key)
-        if key in self.transitions:
+        if key in self.transitions and self.random_percent < random.random()*100:
             twoDArray = self._weighted_move(key, twoDArray)
         else:
             self.transitions[key] = {}
@@ -63,7 +64,7 @@ class TicTacToeMarkovChain:
                 if outcome == "lose" or outcome == "draw":
                     self.transitions[self.history[i]][self.history[i+1]] *= 2
                 else:
-                    self.transitions[self.history[i]][self.history[i+1]] *= 0.5
+                    self.transitions[self.history[i]][self.history[i+1]] *= (0.9 - 0.1*i)
             self.history = []
             print(self.transitions)
         
@@ -88,7 +89,7 @@ class TicTacToeMarkovChain:
                 highKey = k
                 highValue = v
         print("high value ",highValue)
-        if highValue >= 1:
+        if highValue >= random.random():
             return self._key_to_gamestate(highKey)
         else:
             return self._random_move(key, twoDArray)
