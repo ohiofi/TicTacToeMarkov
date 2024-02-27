@@ -9,7 +9,7 @@ class TicTacToeMarkovChain:
     # Returns: None.
     def __init__(self, size=3, randomnessPercent=1):
         self.size = size
-        self.random_percent = randomness 
+        self.random_percent = randomnessPercent
         self.transitions = {
             "x--------":{"x--o-----":1},
             "xx-o-----":{"xx-oo----":1},
