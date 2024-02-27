@@ -7,7 +7,7 @@ class TicTacToeMarkovChain:
     # Initializes a new instance of the Markov Chain with an empty transition table.
     # Parameters: size (int) - Size of the Tic Tac Toe board.
     # Returns: None.
-    def __init__(self, size=3, randomness=1):
+    def __init__(self, size=3, randomnessPercent=1):
         self.size = size
         self.random_percent = randomness 
         self.transitions = {
@@ -89,7 +89,7 @@ class TicTacToeMarkovChain:
                 highKey = k
                 highValue = v
         print("high value ",highValue)
-        if highValue >= random.random():
+        if highValue >= random.random() * self.random_percent:
             return self._key_to_gamestate(highKey)
         else:
             return self._random_move(key, twoDArray)
